@@ -1,4 +1,4 @@
-<?php
+<pre><?php
 
 /*
 *   Proje : Fix Cms
