@@ -112,7 +112,7 @@ class fix  {
     **/
     public function parseUrl(){
 
-               if($_GET){
+               if(($_GET) and (isset($_GET["url"]))){
 
                    $Kontrol =  explode("/",filter_var(rtrim($_GET["url"],"/"),FILTER_SANITIZE_URL));
 
