@@ -563,9 +563,9 @@ trait php  {
     *   @Param
     *   @ ob_start Oturum Güvenligi
     **/
-	public static function obstart(){
+	public static function obstart($par = null){
 
-		return ob_start();
+		return ob_start($par);
 
 	}
 
