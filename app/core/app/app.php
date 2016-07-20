@@ -68,7 +68,7 @@ class fix  {
                     *   Function filitreleme
                     */
 
-                    if(!array_search($this->parseUrl()[0],$this->config["backlist"])){
+					if($this->Black_List_Control_App()){
 
 
                         /*
@@ -105,6 +105,18 @@ class fix  {
 
     }
 
+	public function Black_List_Control_App(){
+
+	if(!empty($this->parseUrl()[1])){
+		if(!in_array($this->parseUrl()[1],$this->config["backlist"])){
+			return true;
+		}
+	}else{
+		return true;
+	}
+
+    }
+	
 
     /*
     *   @Mixed
