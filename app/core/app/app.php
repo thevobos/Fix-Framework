@@ -18,9 +18,8 @@ class fix  {
 
         $url = $this->parseUrl();
 
-
-
-        if(file_exists("app/controllers/". $url[0]. ".php")){
+      
+        if(file_exists(MASTER_DIR . "/app/controllers/". $url[0]. ".php")){
 
 
             $this->config["app"]["controller"] = $url[0];
@@ -31,7 +30,7 @@ class fix  {
         /*
         *   Eğer Değer Dogru İse Dahil Edelim.
         **/
-        if(file_exists("app/controllers/". $this->config["app"]["controller"] . ".php")){
+        if(file_exists(MASTER_DIR . "/app/controllers/". $this->config["app"]["controller"] . ".php")){
 
             /*
             *	Eğer Controller Var İse Dahil edelim
@@ -39,7 +38,7 @@ class fix  {
             require_once("app/controllers/". $this->config["app"]["controller"] . ".php");
 
             $this->config["app"]["controller"] = new $this->config["app"]["controller"];
-        
+
             if(isset($url[1])){
 
                 if(method_exists($this->config["app"]["controller"], $url[1])){
@@ -47,28 +46,19 @@ class fix  {
                     $this->config["app"]["method"] = $url[1];
                     unset($url[1]);
 
-                }else{
-
-                    /*
-                    *	@Mixed
-                    *	@Param Eğer Kullanıcı Yanlış Url girmiş İse Bu Alanda Ayarlanacak
-                    */
-
-                    header("location: /".$this->config["errorpage"]);
-
                 }
 
             }
 
                 $this->config["app"]["params"] = $url ? array_values($url) : [];
-            
+
 
                     /*
                     *   @Mixed
                     *   Function filitreleme
                     */
 
-					if($this->Black_List_Control_App()){
+                    if($this->Black_List_Control_App()){
 
 
                         /*
@@ -88,10 +78,10 @@ class fix  {
                         *   @Mixed
                         *   Gelen İlk Parametre Yasaklı ise errorpage Çagıralım
                         */
-                        call_user_func_array([$this->config["app"]["controller"], $this->config["errorpage"]], $this->config["app"]["params"]);
+                        call_user_func_array([$this->config["app"]["controller"], $this->config["systemerrorfunction"]], $this->config["app"]["params"]);
 
                     }
-                
+
 			}else{
 
 
@@ -105,42 +95,43 @@ class fix  {
 
     }
 
-	public function Black_List_Control_App(){
+	
+    public function Black_List_Control_App(){
 
-	if(!empty($this->parseUrl()[1])){
-		if(!in_array($this->parseUrl()[1],$this->config["backlist"])){
-			return true;
-		}
-	}else{
-		return true;
-	}
+        if(!empty($this->parseUrl()[1])){
+            if(!in_array($this->parseUrl()[1],$this->config["backlist"])){
+                return true;
+            }
+        }else{
+            return true;
+        }
 
     }
-	
 
+	
     /*
     *   @Mixed
     *   @params Url Kontrol Ve Parçalama İşlemleri
     **/
     public function parseUrl(){
 
-               if(($_GET) and (isset($_GET["url"]))){
+        if(($_GET) and (isset($_GET["url"]))){
 
-                   $Kontrol =  explode("/",filter_var(rtrim($_GET["url"],"/"),FILTER_SANITIZE_URL));
+            $Kontrol =  explode("/",filter_var(rtrim($_GET["url"],"/"),FILTER_SANITIZE_URL));
 
-                   if(array_key_exists(current($Kontrol),$this->config["prefix_url"])){
+            if(array_key_exists(current($Kontrol),$this->config["prefix_url"])){
 
-                       $url =  explode("/",filter_var(rtrim($_GET["url"],"/"),FILTER_SANITIZE_URL));
-                       unset($url[0]);
+                $url =  explode("/",filter_var(rtrim($_GET["url"],"/"),FILTER_SANITIZE_URL));
+                unset($url[0]);
 
-                       return array_merge($this->config["prefix_url"][current($Kontrol)],$url);
+                return array_merge($this->config["prefix_url"][current($Kontrol)],$url);
 
-                   }else{
+            }else{
 
-                       return $url = explode("/",filter_var(rtrim($_GET["url"],"/"),FILTER_SANITIZE_URL));
+                return $url = explode("/",filter_var(rtrim($_GET["url"],"/"),FILTER_SANITIZE_URL));
 
-                   }
-               }
+            }
+        }
 
     }
 

@@ -21,14 +21,20 @@ trait config  {
                  * This is private area for you
                  *
                  */
-                "http"     			                =>  true,
-                "https"     		                =>  false,
+                "ssl"     		                    =>  false,
                 "http_url"    		                =>  "http://localhost/",
-                "https_url"    		                =>  "http://localhost/",
-                "assets"    		                =>  "app/assets/",
-                "view"    		                    =>  "app/view/",
+                "https_url"    		                =>  "https://localhost/",
                 "ip"       	 		                =>  "127.0.0.1",
                 "email"     		                =>  "work@cengizakcan.com",
+
+
+                /*
+                 *
+                 * System template assets way
+                 *
+                 * */
+                "template_public"                             =>  "app/templates/public",
+                "template_private"                            =>  "app/templates/private",
 
 
 
@@ -36,9 +42,9 @@ trait config  {
                  * PHP MAİL CLASS SETTINGS
                  *
                  *  System is mail parameters for phpmailer
+                 *   3d party
                  *
                  * */
-
                 "mailserver"    =>  array(
 
                     "host"            	=>  "",
@@ -65,7 +71,7 @@ trait config  {
                  *   All error open number 6 for developer mode
                  *   All error hide number 1 for user mode
                  */
-                    "status"    		            =>  "6",
+                    "status"    		            =>  "",
                     "work"     		 	            =>  false,
                     "webstatus" 		            =>  true,
 
@@ -78,7 +84,8 @@ trait config  {
                  * Error page redication function for class function
                  *
                  */
-                "errorpage" 		                =>  "errorpage",
+                "errorpage" 		                        =>  "errorpage",
+                "systemerrorfunction" 		                =>  "errorfunctionsystempage",
 
 
                 /*
@@ -101,7 +108,7 @@ trait config  {
                  *   App master settings
                  *   @Param Mixed
                  *   Controller structural build
-                 *
+                 *   Master System Controller Settings
                  */
                 "app"       =>  array(
 
@@ -110,14 +117,14 @@ trait config  {
                         *   Runner Controller
                         *   @Param Mixed
                         */
-                        "controller"                =>   "index",
+                        "controller"                =>   "master",
 
 
                         /*
                         *   Opening Function
                         *   Kullanılan Method
                         */
-                        "method"                    =>   "home",
+                        "method"                    =>   "index",
 
 
                         /*
@@ -139,22 +146,86 @@ trait config  {
                  */
                 "backlist" =>  array(
 
-                        "app"        =>   "app",
+                        "app",
+                        "model",
+                        "template_public_model",
+                        "view",
+                        "loader",
+                        "assets",
+                        "assetsurl",
+                        "page",
+                        "templateurl",
+                        "templatepath",
+                        "write",
+                        "system_language",
+                        "plugin_action",
+                        "report_export",
+                        "get",
+                        "timezone",
+                        "download",
+                        "jsonencode",
+                        "isextends",
+                        "encode",
+                        "key",
+                        "testmicrotime",
+                        "issetfill",
+                        "timecover",
+                        "timetr",
+                        "post",
+                        "files",
+                        "hashtag",
+                        "slash",
+                        "textlimit",
+                        "isfolder",
+                        "isfile",
+                        "newfile",
+                        "parseUrl",
+                        "undir",
+                        "Antiinjection",
+                        "textbig",
+                        "permalink",
+                        "bbkod",
+                        "hiddeninfo",
+                        "info",
+                        "location",
+                        "refresh",
+                        "imagesupload",
+                        "fileget",
+                        "obstart",
+                        "sessionstart",
+                        "session",
+                        "sessionadd",
+                        "unsession",
+                        "unobstart",
+                        "timeback",
+                        "curlget",
+                        "curlpost",
+                        "curl",
+                        "curldownload",
+                        "curlupload",
+                        "googlechar",
+                        "browserlang",
+                        "metainfo",
+                        "realip",
+                        "filtervar",
+                        "ipapiservice",
 
                     ),
 
+					
+				/*
+				
+				*/
 
                 /*
                  *
                  * SİSTEM Url proefix Alanı
                  * @Mixed
                  * Sistemde Yörüngeleme sistemidir  test.com/controller/param to test.com/param
-                 *
+                 *  SAMPLE
+                 *  "xx" => ["aa","bb"]
                  */
-                "prefix_url" =>  array(
-
-                    "anasayfa"      =>  array("index","home"),
-                ),
+                "prefix_url" =>  array(),
 
 
                 /*
@@ -171,7 +242,7 @@ trait config  {
                 "mysql"     =>  array(
 
                     "host"                          =>  "localhost",
-                    "user"                          =>  "",
+                    "user"                          =>  "root",
                     "password"                      =>  "",
                     "data"                          =>  "",
                     "charset"                       =>  "utf-8",

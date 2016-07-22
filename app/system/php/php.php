@@ -7,7 +7,6 @@
 
 trait php  {
 
-
 	/*
     *   @Mixed
     *   @Param
@@ -18,7 +17,6 @@ trait php  {
 		return date_default_timezone_set('Europe/Istanbul');
 
 	}
-
 
 	/*
     *   @Mixed
@@ -69,7 +67,6 @@ trait php  {
     *   @ İp Api Service V1 http://www.geoplugin.net/json.gp
      *
 	{
-		
 	  "geoplugin_request":"81.215.88.93",
 	  "geoplugin_status":200,
 	  "geoplugin_credit":"Some of the returned data includes GeoLite data created by MaxMind, available from <a href=\\'http:\/\/www.maxmind.com\\'>http:\/\/www.maxmind.com<\/a>.",
@@ -411,10 +408,37 @@ trait php  {
 
 	/*
     *   @Mixed
+    *   @params Url Kontrol Ve Parçalama İşlemleri
+    **/
+	public function parseUrl(){
+
+		if(($_GET) and (isset($_GET["url"]))){
+
+			$Kontrol =  explode("/",filter_var(rtrim($_GET["url"],"/"),FILTER_SANITIZE_URL));
+
+			if(array_key_exists(current($Kontrol),$this->config["prefix_url"])){
+
+				$url =  explode("/",filter_var(rtrim($_GET["url"],"/"),FILTER_SANITIZE_URL));
+				unset($url[0]);
+
+				return array_merge($this->config["prefix_url"][current($Kontrol)],$url);
+
+			}else{
+
+				return $url = explode("/",filter_var(rtrim($_GET["url"],"/"),FILTER_SANITIZE_URL));
+
+			}
+		}
+
+	}
+
+
+	/*
+    *   @Mixed
     *   @Param
     *   @ Klasor Silme Ayarı
     **/
-	public static function unfile($par){
+	public static function undir($par){
 
 		return rmdir($par);
 
@@ -544,6 +568,11 @@ trait php  {
 
 	}
 
+	public static function report_export(array $par = []){
+
+		return $this::write($this::jsonencode($par, true));
+
+	}
 
 
 	/*
@@ -557,6 +586,17 @@ trait php  {
 
 	}
 
+	/*
+     *   @Mixed
+     *   @Param
+     *   @ Dosya Çagırma
+     **/
+	public static function fileget($par1){
+
+		return file_get_contents($par1);
+
+	}
+
 
 	/*
     *   @Mixed
@@ -564,7 +604,7 @@ trait php  {
     *   @ ob_start Oturum Güvenligi
     **/
 	public static function obstart($par = null){
-
+		
 		return ob_start($par);
 
 	}

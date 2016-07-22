@@ -8,10 +8,13 @@ RewriteCond %{REQUEST_FILENAME} !-d
 
 ## Url Params Get URL
 RewriteRule ^(.*?)$ index.php?url=$1 [QSA,L]
- 
+
+
  
 ## #Error Location Return
 ErrorDocument 404 /
 ErrorDocument 403 /
 ErrorDocument 500 /
 ErrorDocument 401 /
+
+
